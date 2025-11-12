@@ -1,0 +1,34 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export type User = {
+  id: string;
+  email: string;
+  name: string;
+  is_premium: boolean;
+  created_at: string;
+};
+
+export type Consultation = {
+  id: string;
+  user_id: string;
+  symptoms: string;
+  diagnosis: string;
+  severity: 'leve' | 'moderado' | 'grave';
+  medications: string[];
+  recommendations: string;
+  created_at: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  user_id: string;
+  consultation_id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  created_at: string;
+};
