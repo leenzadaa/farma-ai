@@ -27,12 +27,17 @@ export default function PremiumPage() {
   const { user, loading, refreshUser } = useAuth();
   const router = useRouter();
   const [processing, setProcessing] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !loading && !user) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, mounted]);
 
   const handleSubscribe = async () => {
     if (!user) return;
@@ -62,7 +67,7 @@ export default function PremiumPage() {
     }, 2000);
   };
 
-  if (loading) {
+  if (!mounted || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1E88E5]"></div>
